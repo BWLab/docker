@@ -82,8 +82,15 @@ COPY ./odoo.conf /etc/odoo/
 # Mount /var/lib/odoo to allow restoring filestore and /mnt/extra-addons for users addons
 RUN chown odoo /etc/odoo/odoo.conf \
     && mkdir -p /mnt/extra-addons \
-    && chown -R odoo /mnt/extra-addons
+    && chown -R odoo /mnt/extra-addons \
+    && chown -R odoo /var/lib/odoo
 VOLUME ["/var/lib/odoo", "/mnt/extra-addons"]
+
+RUN pip3 install wheel 
+RUN pip3 install unidecode \
+                 codicefiscale \
+                 asn1crypto \
+                 pyxb==1.2.6
 
 # Expose Odoo services
 EXPOSE 8069 8071 8072
